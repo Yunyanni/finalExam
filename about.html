@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <!-- 定義文件類型，語言設為繁體中文 -->
+    <meta charset="UTF-8"> <!-- 設定網頁的文字編碼為 UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 適配行動裝置的視窗比例 -->
+    <title>關於我們 | Paws for a Cause</title> <!-- 頁面標題 -->
+
+    <style>
+        /* 全域樣式設定 */
+        body {
+            font-family: Arial, sans-serif; /* 預設字型 */
+            margin: 0; /* 移除內外邊距 */
+            padding: 0;
+            background-color: #ffffff; /* 白色背景 */
+            color: #4e3b31; /* 主文字顏色 */
+        }
+
+        /* 導覽列樣式 */
+        .navbar {
+            display: flex;
+            align-items: center; /* 元素垂直置中 */
+            background-color: #fff; /* 白色背景 */
+            border-bottom: 1px solid #ddd; /* 底部分隔線 */
+            padding: 10px 20px; /* 內邊距 */
+            position: sticky; /* 固定在頂部 */
+            top: 0;
+            z-index: 1000; /* 置於最上層 */
+        }
+        .navbar .brand {
+            flex: 1; /* 占滿剩餘空間 */
+            font-size: 20px; /* 字體大小 */
+            font-weight: bold; /* 粗體 */
+            color: #6a4f4b; /* 主題色調 */
+        }
+        .navbar .icons {
+            display: flex; /* 水平排列圖示 */
+            gap: 15px; /* 圖示之間的間距 */
+        }
+        .navbar .icons img {
+            width: 30px; /* 圖示寬度 */
+            height: 30px; /* 圖示高度 */
+            cursor: pointer; /* 滑鼠移動時顯示手型 */
+        }
+
+        /* 分類導覽列樣式 */
+        .category-bar {
+            display: flex; /* 水平排列 */
+            justify-content: center; /* 置中對齊 */
+            align-items: center; /* 垂直置中 */
+            background-color: #fdf1e6; /* 米白色背景 */
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .category-bar a {
+            color: #6a4f4b; /* 主題色 */
+            text-decoration: none; /* 移除底線 */
+            margin: 0 15px; /* 左右間距 */
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .category-bar a:hover {
+            color: #4e3b31; /* 深咖啡色 */
+            border-bottom: 2px solid #4e3b31; /* 下劃線效果 */
+        }
+
+        /* 下拉選單樣式 */
+        .dropdown {
+            position: relative; /* 定位為相對，以容納子元素 */
+        }
+        .dropdown .submenu {
+            display: none; /* 預設隱藏 */
+            position: absolute; /* 相對於父層定位 */
+            top: 100%; /* 在父層下方顯示 */
+            left: 0;
+            background-color: #f9f9f9; /* 淺色背景 */
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* 陰影效果 */
+            z-index: 1; /* 顯示在其他內容上方 */
+        }
+        .dropdown:focus-within .submenu {
+            display: block; /* 點擊或聚焦時顯示選單 */
+        }
+        .submenu a {
+            color: #6a4f4b;
+            text-decoration: none;
+            padding: 12px 16px;
+            display: block; /* 垂直排列 */
+        }
+        .submenu a:hover {
+            background-color: #ddd; /* 滑鼠移過時背景變灰 */
+        }
+
+        /* 內容區樣式 */
+        .content {
+            padding: 40px; /* 區塊內邊距 */
+            text-align: center; /* 文字置中 */
+        }
+        .content h3 {
+            font-size: 36px; /* 標題字型大小 */
+            color: #6a4f4b;
+            margin-bottom: 20px;
+        }
+        .content p {
+            font-size: 18px; /* 段落字型大小 */
+            line-height: 1.6; /* 行距 */
+            margin-bottom: 20px;
+        }
+
+        .contact-info-block {
+            padding: 20px;
+            background-color: #4e3b31; /* 改為咖啡色背景 */
+            text-align: left;
+            padding-left: 20px;
+            color: white; /* 設置文字為白色，與咖啡色背景對比 */
+}
+        .contact-images a {
+            margin: 10px;
+        }
+
+        .contact-images img {
+            width: 40px;
+            height: 40px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #4e3b31; /* 設為咖啡色 */
+            color: white; /* 文字顏色改為白色，與背景形成對比 */
+            border-top: 1px solid #ddd;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <!-- 導覽列 -->
+    <div class="navbar">
+        <a href="index.html" class="brand">Paws for a Cause</a> <!-- 導覽列品牌名稱連結首頁 -->
+        <div class="icons">
+            <img src="./image/user-icon.jpg" alt="會員登入" onclick="window.location.href='login.html'">
+            <img src="./image/cart-icon.png" alt="購物車" onclick="window.location.href='car.html'">
+        </div>
+    </div>
+
+    <!-- 分類導覽列 -->
+    <div class="category-bar">
+        <a href="所有商品.html">【所有商品】</a>
+        <div class="dropdown">
+            <a href="#">【狗】</a>
+            <div class="submenu">
+                <a href="犬乾糧主頁.html">飼料</a>
+                <a href="犬玩具主頁.html">玩具</a>
+                <a href="犬其他主頁.html">其他</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">【貓】</a>
+            <div class="submenu">
+                <a href="貓乾糧主頁.html">飼料</a>
+                <a href="貓玩具主頁.html">玩具</a>
+                <a href="貓其他主頁.html">其他</a>
+            </div>
+        </div>
+        <a href="about.html">【關於我們】</a>
+        <a href="#contact">【聯絡我們】</a>
+        <a href="car.html">【會員登入及購物車】</a>
+    </div>
+
+    <!-- 主要內容 -->
+    <div class="content">
+        <h3>關於我們：</h3>
+        <p>我們是「Paws for a Cause」</p>
+        <p>透過販售寵物用品來支持毛孩的福祉。</p>
+        <p>即使無法養寵物，每個人也能成為動物的守護者</p>
+        <p>購買的商品不僅是寵物用品，更是愛心捐助。</p>
+    </div>
+
+    <!-- 聯絡我們區塊 -->
+    <div class="contact-info-block" id="contact">
+        <h3>聯絡我們</h3>
+        <p><strong>客服專線：</strong>0800-123-456</p>
+        <p><strong>客服時間：</strong>週一至週五 9:00 AM - 6:00 PM</p>
+        <p><strong>電子郵件：</strong>contact@pawsforacause.com</p>
+        <div class="contact-images">
+            <a href="https://www.instagram.com/"><img src="./image/ig.png" alt="Instagram"></a>
+            <a href="https://www.facebook.com/"><img src="./image/fb.png" alt="Facebook"></a>
+        </div>
+    </div>
+
+    <!-- 底部版權 -->
+    <footer>
+        <p>© 2024 Paws for a Cause | All Rights Reserved</p>
+    </footer>
+</body>
+</html>

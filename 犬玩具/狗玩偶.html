@@ -1,0 +1,667 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>泌尿道保健濕糧</title>
+    <style>
+        nav {
+            margin-left: 50px; /* 控制整體向右移動的距離 */
+            margin-top: 30px;
+        }
+
+        /* Header 樣式 */
+        header {
+            background-color: #fdf1e6; /* 淡灰色背景 */
+            padding: 15px 20px; /* 內部間距 */
+            display: flex;
+            justify-content: center; /* 水平置中 */
+            gap: 30px; /* 選單間距 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 下方陰影 */
+            position: relative; /* 為下拉選單準備定位 */
+        }
+
+        header a {
+            text-decoration: none;
+            color: gray;
+            font-size: 18px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        header a:hover {
+            color: #6a4f4b; /* 滑鼠懸停時變綠 */
+        }
+
+        /* 下拉選單樣式 */
+        .dropdown {
+            position: relative; /* 父級定位 */
+        }
+
+        .dropdown-menu {
+            position: absolute; /* 絕對定位相對於父級 */
+            top: 100%; /* 出現在父級下方 */
+            left: 0;
+            background-color: #ffffff; /* 白色背景 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 下方陰影 */
+            border-radius: 5px; /* 圓角 */
+            display: none; /* 預設隱藏 */
+            flex-direction: column; /* 水平排列 */
+            gap: 10px; /* 選項間距 */
+            padding: 10px 0; /* 內部上下間距 */
+            z-index: 10; /* 確保下拉選單在頂層 */
+        }
+
+        .dropdown-menu a {
+            padding: 10px 20px; /* 選項的內部間距 */
+            text-decoration: none;
+            color: gray;
+            font-size: 16px;
+            white-space: nowrap; /* 防止文字換行 */
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f0f0f0; /* 滑鼠懸停時背景變灰 */
+        }
+
+        /* 滑鼠懸停時顯示下拉選單 */
+        .dropdown:hover .dropdown-menu {
+            display: flex; /* 顯示下拉選單 */
+        }
+
+        /* OL 的樣式，保持其基本排版 */
+        ol {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 10px;
+            font-weight: bold;
+        }
+
+        li a {
+            text-decoration: none;
+            color: gray; /* 文字顏色改為灰色 */
+            font-size: 18px;
+        }
+
+        li a:focus, li a:hover, li a:active {
+            color:  #6a4f4b; /* 滑鼠懸停或點擊時顯示藍色 */
+            outline: none;
+        }
+
+        li:not(:last-child)::after {
+            content: ">"; /* 插入 ">" 符號 */
+            margin: 0 10px;
+            color: gray; /* 分隔符號改為灰色 */
+        }
+
+        /* 整體容器，使用 flex 排列圖片與文字 */
+        .container {
+            display: flex;
+            align-items: center; /* 垂直對齊 */
+            gap: 20px; /* 圖片和文字之間的間距 */
+        }
+
+        img {
+            width: 25%; /* 調整圖片寬度 */
+            height: auto;
+            padding: 200px;
+        }
+
+        .text {
+            max-width: 50%; /* 設定文字區域的最大寬度 */
+            margin-top: -200px; /* 使文字上移 */
+        }
+
+        h2 {
+            color: gray;
+            font-size: 20px;
+        }
+
+        h1 {
+            color: black;
+            font-size: 50px;
+        }
+
+        p {
+            font-size: 18px;
+            color: gray;
+            margin-top: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 50px; /* 確保按鈕有足夠間距 */
+        }
+
+        /* 加入購物車按鈕樣式（只有框線） */
+        .button.cart {
+            padding: 10px 20px;
+            background-color: transparent; /* 背景透明 */
+            color: black; /* 文字顏色黑色 */
+            border: 2px solid black; /* 黑色框線 */
+            border-radius: 5px; /* 圓角 */
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .button.cart:hover {
+            background-color: #f0f0f0; /* 滑鼠懸停時背景變淡灰色 */
+        }
+
+        /* 直接購買按鈕樣式 */
+        .button.buy {
+            padding: 10px 20px;
+            background-color: #6a4f4b; /* 綠色背景 */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .button.buy:hover {
+            background-color: #6a4f4b; /* 滑鼠懸停時顏色變深 */
+        }
+
+        /* 產品介紹與特色的容器樣式 */
+        .product-intro {
+            padding: 40px 20px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        .product-intro h2 {
+            font-size: 32px;
+            color: #333;
+        }
+
+        .product-intro p {
+            font-size: 18px;
+            color: gray;
+            max-width: 800px;
+            margin: 20px auto;
+            white-space: pre-wrap; /* 確保換行符號和空白都被正確處理 */
+        }
+
+        /* 產品特色樣式 */
+        .product-features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            text-align: center;
+        }
+
+        .feature h3 {
+            font-size: 24px;
+            color: #6a4f4b;
+            margin-bottom: 15px;
+        }
+
+        .feature p {
+            font-size: 16px;
+            color: gray;
+        }
+        /* 商品評論區域樣式 */
+        .reviews {
+            padding: 40px 20px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        .reviews h2 {
+            font-size: 32px;
+            color: #333;
+        }
+
+        .review {
+            background-color: #fff;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .reviewer {
+            font-weight: bold;
+            color: #6a4f4b;
+        }
+
+        .rating {
+            color: #FFD700; /* 黃金色星星 */
+        }
+
+        .comment {
+            color: gray;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .review-form {
+            margin-top: 40px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .review-form h3 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #6a4f4b;
+        }
+
+        button.submit {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #6a4f4b;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button.submit:hover {
+            background-color: #6a4f4b;
+        }
+        .navbar {
+            display: flex;
+            align-items: center; /* 元素垂直置中 */
+            background-color: #fff; /* 白色背景 */
+            border-bottom: 1px solid #ddd; /* 底部分隔線 */
+            padding: 10px 20px; /* 內邊距 */
+            position: sticky; /* 固定在頂部 */
+            top: 0;
+            z-index: 1000; /* 置於最上層 */
+        }
+        .navbar .brand {
+            flex: 1; /* 占滿剩餘空間 */
+            font-size: 20px; /* 字體大小 */
+            font-weight: bold; /* 粗體 */
+            color: #6a4f4b; /* 主題色調 */
+        }
+        .content {
+            padding: 40px; /* 區塊內邊距 */
+            text-align: center; /* 文字置中 */
+        }
+        .content h3 {
+            font-size: 36px; /* 標題字型大小 */
+            color: #6a4f4b;
+            margin-bottom: 20px;
+        }
+        .content p {
+            font-size: 18px; /* 段落字型大小 */
+            line-height: 1.6; /* 行距 */
+            margin-bottom: 20px;
+        }
+
+        .contact-info-block {
+            padding: 20px;
+            background-color: #4e3b31; /* 咖啡色背景 */
+            text-align: left;
+            padding-left: 20px;
+            color: white; /* 設置文字為白色，與背景對比 */
+        }
+    
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #4e3b31; /* 設為咖啡色 */
+            color: white; /* 文字顏色改為白色，與背景形成對比 */
+            border-top: 1px solid #ddd;
+        }
+        #contact p {
+            color: white; /* 設定文字顏色為白色 */
+        }
+
+        #contact strong {
+            color: white; /* 設定加粗文字顏色為白色 */
+        }
+        footer p {
+            color: white; /* 設定底部版權文字顏色為白色 */
+        }
+        /* 數量輸入框和按鈕的樣式 */
+input[type="number"] {
+    width: 80px; /* 設定數量框的寬度 */
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc; /* 邊框顏色 */
+    border-radius: 5px; /* 圓角 */
+    text-align: center;
+    margin-right: 10px; /* 與按鈕的間距 */
+    transition: border-color 0.3s;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: #6a4f4b; /* 聚焦時邊框顏色變為綠色 */
+}
+
+/* 增減數量按鈕樣式 */
+button.quantity-btn {
+    padding: 10px;
+    font-size: 18px;
+    border: 2px solid #6a4f4b; /* 按鈕邊框顏色 */
+    background-color: transparent; /* 背景透明 */
+    color: #6a4f4b; /* 按鈕文字顏色 */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button.quantity-btn:hover {
+    background-color: #6a4f4b; /* 滑鼠懸停時背景變為綠色 */
+    color: white; /* 文字顏色變為白色 */
+}
+
+/* 如果需要將增減數量按鈕放在數量框兩側，使用 flex 排版 */
+.quantity-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 控制數量框與按鈕之間的間距 */
+}
+
+
+    </style>
+</head>
+<body>
+    
+    <div class="navbar">
+        <div class="brand">Paws for a Cause</div>
+    </div>
+    <header>
+        <a href="../所有商品.html">【所有商品】</a>
+        <div class="dropdown">
+            <a href="#">【狗】</a>
+            <div class="dropdown-menu">
+                <a href="../犬乾糧主頁.html">飼料</a>
+                <a href="../犬玩具主頁.html">玩具</a>
+                <a href="../犬其他主頁.html">其他</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#">【貓】</a>
+            <div class="dropdown-menu">
+                <a href="../貓乾糧主頁.html">飼料</a>
+                <a href="../貓玩具主頁.html">玩具</a>
+                <a href="../貓其他主頁.html">其他</a>
+            </div>
+        </div>
+        
+        
+        <a href="../about.html">【關於我們】</a>
+        <a href="#contact">【聯絡我們】</a>
+        <a href="../car.html">【會員登入及購物車】</a>
+        
+    </header>
+
+    <nav>
+        <ol>
+            <li><a href="../index.html">首頁</a></li>
+            <li><a href="../所有商品.html">所有商品</a></li>
+            <li><a href="../犬玩具主頁 .html">玩具</a></li>
+        </ol>
+    </nav>
+    
+    <main>
+        <div class="container">
+            <img src="犬玩具照片/狗玩偶.jpg" alt="狗狗玩偶">
+            <div class="text">
+                <h1>兔子玩偶</h1>
+                <h2>所有體型成犬適用</h2>
+                <p>狗狗最愛，兔兔相伴，玩樂無限！ </p>
+                <div class="quantity-container">
+                    <button class="quantity-btn" id="decreaseBtn">-</button>
+                    <input type="number" id="quantity" name="quantity" min="1" value="1">
+                    <button class="quantity-btn" id="increaseBtn">+</button>
+                </div>
+                <div class="buttons">
+                    <button class="button cart" id="addToCartButton">加入購物車</button>
+                    <button class="button buy">直接購買</button>
+                </div>
+            </div>
+        </div>
+    
+        <!-- 產品介紹與特色區域 -->
+        <div class="product-intro">
+            <h2>產品介紹</h2>
+            <p>這款狗狗兔子玩偶以柔軟無毒的材質製成，為狗狗提供安全舒適的玩樂體驗。內置響聲裝置能吸引狗狗的興趣，增添互動樂趣。同時，耐咬設計與加固縫線工藝確保玩偶經久耐用，適合各類狗狗長期陪伴與使用。</p>
+            
+            <!-- 產品特色 -->
+            <div class="product-features">
+                <div class="feature">
+                    <h3>柔軟材質
+                    </h3>
+                    <p>使用高品質的柔軟棉布材質，確保狗狗咬玩時不傷牙齒，且材質無毒，讓主人更放心。
+    
+    
+    
+                    </p>
+                </div>
+                <div class="feature">
+                    <h3>內置響聲
+    
+                    </h3>
+                    <p>
+                        玩偶內部內置響聲裝置，輕輕咬合就能發出聲音，吸引狗狗注意，提升互動樂趣。
+                    </p>
+                </div>
+                <div class="feature">
+                    <h3>耐咬設計
+    
+                    </h3>
+                    <p>採用特殊加固縫線工藝，增加玩偶的耐咬性，適合各類狗狗長時間使用，不易損壞。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // 假設 cartItems 是從 localStorage 載入的
+let cartItems = JSON.parse(localStorage.getItem("shoppingCart")) || [];
+
+document.addEventListener("DOMContentLoaded", function() {
+    var quantityInput = document.getElementById("quantity");
+    var decreaseBtn = document.getElementById("decreaseBtn");
+    var increaseBtn = document.getElementById("increaseBtn");
+    var addToCartButton = document.getElementById("addToCartButton");
+
+    var productPrice = 350; // 假設每個商品的價格是 100，這裡可以根據實際商品價格調整
+
+    // 先檢查 localStorage 是否有已儲存的數量，若有則載入
+    if (localStorage.getItem("productQuantity")) {
+        quantityInput.value = localStorage.getItem("productQuantity");
+    }
+
+    // 點擊減少按鈕
+    decreaseBtn.addEventListener("click", function() {
+        var currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+            quantityInput.value = currentValue - 1;
+            // 儲存數量到 localStorage
+            localStorage.setItem("productQuantity", quantityInput.value);
+        }
+    });
+
+    // 點擊增加按鈕
+    increaseBtn.addEventListener("click", function() {
+        var currentValue = parseInt(quantityInput.value);
+        quantityInput.value = currentValue + 1;
+        // 儲存數量到 localStorage
+        localStorage.setItem("productQuantity", quantityInput.value);
+    });
+
+    // 加入購物車按鈕功能
+    addToCartButton.addEventListener("click", function() {
+        var productName = "泌尿道保健濕糧";  // 假設商品名稱
+        var productQuantity = parseInt(quantityInput.value);  // 取得使用者選擇的數量
+        var productPrice=350;
+        var productTotalPrice = productPrice * productQuantity;  // 計算總價
+
+        // 構建商品資料
+        var product = {
+            name: productName,
+            quantity: productQuantity,
+            price: productPrice,
+            totalPrice: productTotalPrice
+        };
+
+        // 檢查購物車是否已存在相同商品
+        var existingProductIndex = cartItems.findIndex(item => item.name === productName);
+        
+        if (existingProductIndex !== -1) {
+            // 如果商品已存在，更新數量和總價
+            cartItems[existingProductIndex].quantity += productQuantity;
+            cartItems[existingProductIndex].totalPrice = cartItems[existingProductIndex].quantity * productPrice;
+        } else {
+            // 如果是新商品，將其加入購物車
+            cartItems.push(product);
+        }
+
+        // 儲存購物車至 localStorage
+        localStorage.setItem("shoppingCart", JSON.stringify(cartItems));
+
+        // 提示加入購物車成功
+        alert("商品已成功加入購物車！");
+  
+
+        // 更新購物車顯示
+        updateCart();
+    });
+
+    // 更新購物車顯示
+    function updateCart() {
+        const $cartItems = $('#cart-items');
+        $cartItems.empty(); // 清空表格內容
+
+        if (cartItems.length === 0) {
+            $('#empty-cart').show();
+            $('.cart-total, .cart-actions').hide();
+            return;
+        }
+
+        $('#empty-cart').hide();
+        $('.cart-total, .cart-actions').show();
+
+        let totalPrice = 0;
+
+        cartItems.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            totalPrice += itemTotal;
+
+            $cartItems.append(`
+                <tr>
+                    <td>${item.name}</td>
+                    <td>
+                        <button class="update-quantity" data-index="${index}" data-action="decrease">-</button>
+                        ${item.quantity}
+                        <button class="update-quantity" data-index="${index}" data-action="increase">+</button>
+                    </td>
+                    <td>$${item.price}</td>
+                    <td>$${itemTotal}</td>
+                    <td>
+                        <button class="remove-item" data-index="${index}">刪除</button>
+                    </td>
+                </tr>
+            `);
+        });
+
+        $('#total-price').text(`$${totalPrice}`);
+        localStorage.setItem("shoppingCart", JSON.stringify(cartItems)); // 儲存更新後的購物車資料
+    }
+
+    // 監聽更新數量按鈕
+    $('#cart-items').on('click', '.update-quantity', function () {
+        const index = $(this).data('index');
+        const action = $(this).data('action');
+
+        if (action === 'increase') {
+            cartItems[index].quantity += 1; // 增加數量
+        } else if (action === 'decrease' && cartItems[index].quantity > 1) {
+            cartItems[index].quantity -= 1; // 減少數量
+        }
+
+        localStorage.setItem("shoppingCart", JSON.stringify(cartItems)); // 更新localStorage
+        updateCart(); // 更新購物車顯示
+    });
+
+    // 刪除商品功能
+    $('#cart-items').on('click', '.remove-item', function () {
+        const index = $(this).data('index');
+        cartItems.splice(index, 1); // 刪除指定商品
+        localStorage.setItem("shoppingCart", JSON.stringify(cartItems)); // 更新localStorage
+        updateCart(); // 更新購物車顯示
+    });
+
+    // 初始化購物車
+    updateCart();
+});
+
+        
+    </script>
+</script>
+     <!-- 商品評論區域 -->
+     <div class="reviews">
+        <h2>商品評論</h2>
+        <div class="review">
+            <p class="reviewer">小明: <span class="rating">★★★★★</span></p>
+            <p class="comment">我的狗超喜歡！</p>
+        </div>
+        <div class="review">
+            <p class="reviewer">小華: <span class="rating">★★★★☆</span></p>
+            <p class="comment">當事狗很喜歡～</p>
+        </div>
+        <div class="review-form">
+            <h3>發表評論</h3>
+            <textarea placeholder="留下您的評論..." rows="4" cols="50"></textarea><br>
+            <button class="button submit">提交評論</button>
+        </div>
+    </div>
+    <div class="contact-info-block" id="contact">
+        <h3>聯絡我們</h3>
+        <p><strong>客服專線：</strong>0800-123-456</p>
+        <p><strong>客服時間：</strong>週一至週五 9:00 AM - 6:00 PM</p>
+        <p><strong>電子郵件：</strong>contact@pawsforacause.com</p>
+    </div>
+
+    <!-- 底部版權 -->
+    <footer>
+        <p>© 2024 Paws for a Cause | All Rights Reserved</p>
+    </footer>
+</body>
+</html>
+

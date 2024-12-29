@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員登入及購物車</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        header {
+            background-color: #fdf1e6;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        header a {
+            text-decoration: none;
+            color: gray;
+            font-size: 18px;
+            font-weight: bold;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        header a:hover {
+            color: #6e5754;
+        }
+
+        section {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #6e5754;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #6e5754;
+            color: white;
+            border: none;
+            padding: 10px 435px;
+            font-size: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #6e5754;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .form-group {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            width: auto;
+            text-align: left;
+            padding-right: 10px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #6e5754;
+            color: white;
+        }
+
+        table td button {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        .cart-total {
+            text-align: right;
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .cart-actions {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .alert {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 20px;
+        }
+        .navbar {
+            display: flex;
+            align-items: center; /* 元素垂直置中 */
+            background-color: #fff; /* 白色背景 */
+            border-bottom: 1px solid #ddd; /* 底部分隔線 */
+            padding: 10px 20px; /* 內邊距 */
+            position: sticky; /* 固定在頂部 */
+            top: 0;
+            z-index: 1000; /* 置於最上層 */
+        }
+        .navbar .brand {
+            flex: 1; /* 占滿剩餘空間 */
+            font-size: 20px; /* 字體大小 */
+            font-weight: bold; /* 粗體 */
+            color: #6a4f4b; /* 主題色調 */
+        }
+        .content {
+            padding: 40px; /* 區塊內邊距 */
+            text-align: center; /* 文字置中 */
+        }
+        .content h3 {
+            font-size: 36px; /* 標題字型大小 */
+            color: #6a4f4b;
+            margin-bottom: 20px;
+        }
+        .content p {
+            font-size: 18px; /* 段落字型大小 */
+            line-height: 1.6; /* 行距 */
+            margin-bottom: 20px;
+        }
+
+        .contact-info-block {
+            padding: 20px;
+            background-color: #4e3b31; /* 咖啡色背景 */
+            text-align: left;
+            padding-left: 20px;
+            color: white; /* 設置文字為白色，與背景對比 */
+        }
+    
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #4e3b31; /* 設為咖啡色 */
+            color: white; /* 文字顏色改為白色，與背景形成對比 */
+            border-top: 1px solid #ddd;
+        }
+        #contact p {
+            color: white; /* 設定文字顏色為白色 */
+        }
+
+        #contact strong {
+            color: white; /* 設定加粗文字顏色為白色 */
+        }
+        footer p {
+            color: white; /* 設定底部版權文字顏色為白色 */
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html" class="brand">Paws for a Cause</a> <!-- 導覽列品牌名稱連結首頁 -->
+    </div>
+    <header>
+        <a id="nav-register">會員註冊</a>
+        <a id="nav-login">會員登入</a>
+        <a id="nav-profile">會員資料</a>
+        <a id="nav-cart">購物車</a>
+    </header>
+
+    <section id="register">
+        <h2>會員註冊</h2>
+        <form id="register-form">
+            <div class="form-group">
+                <label for="name">姓名:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">密碼:</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit">註冊</button>
+        </form>
+    </section>
+
+    <section id="login" style="display: none;">
+        <h2>會員登入</h2>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="login-email">Email:</label>
+                <input type="email" id="login-email" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">密碼:</label>
+                <input type="password" id="login-password" required>
+            </div>
+            <button type="submit">登入</button>
+        </form>
+    </section>
+
+    <section id="cart" style="display: none;">
+        <h2>購物車</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>商品名稱</th>
+                    <th>數量</th>
+                    <th>單價</th>
+                    <th>總金額</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+                <!-- 動態生成 -->
+            </tbody>
+        </table>
+        <div id="empty-cart" style="display: none; text-align: center; margin-top: 20px; color: gray;">
+            購物車目前是空的！
+        </div>
+        <div class="cart-total" style="display: none;">
+            總金額: <span id="total-price">$0</span>
+        </div>
+        <div class="cart-actions" style="display: none; text-align: right;">
+            <button id="checkout-btn">結帳</button>
+        </div>
+    </section>
+
+    <section id="profile" style="display: none;">
+        <h2>會員資料</h2>
+        <div id="profile-info">尚未登入</div>
+        <h3>歷史消費紀錄</h3>
+        <ul id="order-list">
+            <li>尚無消費紀錄</li>
+        </ul>
+        <h3>評論與評分紀錄</h3>
+        <ul id="review-list">
+            <li>尚無評論紀錄</li>
+        </ul>
+    </section>
+
+    <div class="alert" id="alert-message" style="display: none;"></div>
+
+    <script>
+        $(document).ready(function () {
+            let registeredUser = null;
+            let cartItems = JSON.parse(localStorage.getItem("shoppingCart")) || [];
+
+            // 註冊功能
+            $('#register-form').submit(function (e) {
+                e.preventDefault();
+                registeredUser = {
+                    name: $('#name').val(),
+                    email: $('#email').val(),
+                    password: $('#password').val()
+                };
+                alert('註冊成功，請登入！');
+                $('#register').hide();
+                $('#login').show();
+            });
+
+            // 登入功能
+            $('#login-form').submit(function (e) {
+                e.preventDefault();
+                const loginEmail = $('#login-email').val();
+                const loginPassword = $('#login-password').val();
+
+                if (registeredUser && loginEmail === registeredUser.email && loginPassword === registeredUser.password) {
+                    alert('登入成功！');
+                    $('#login').hide();
+                    $('#profile').show();
+                    $('#profile-info').text(`會員姓名: ${registeredUser.name}`);
+                } else {
+                    alert('Email 或密碼輸入錯誤！');
+                }
+            });
+
+            // 導覽列點擊事件
+            $('#nav-cart').click(function () {
+                $('section').hide();
+                $('#cart').show();
+                updateCart(); // 在顯示購物車時更新購物車內容
+            });
+
+            $('#nav-register').click(function () {
+                $('section').hide();
+                $('#register').show();
+            });
+
+            $('#nav-login').click(function () {
+                if (registeredUser) {
+                    $('section').hide();
+                    $('#login').show();
+                } else {
+                    showAlert('請先註冊!');
+                }
+            });
+
+            $('#nav-profile').click(function () {
+                if (registeredUser) {
+                    $('section').hide();
+                    $('#profile').show();
+                } else {
+                    showAlert('請先註冊!');
+                }
+            });
+
+            function showAlert(message) {
+                $('#alert-message').text(message).show();
+                setTimeout(() => {
+                    $('#alert-message').hide();
+                }, 3000);
+            }
+
+            // 更新購物車顯示
+            function updateCart() {
+    const $cartItems = $('#cart-items');
+    $cartItems.empty(); // 清空表格內容
+
+    if (cartItems.length === 0) {
+        $('#empty-cart').show();
+        $('.cart-total, .cart-actions').hide();
+        return;
+    }
+
+    $('#empty-cart').hide();
+    $('.cart-total, .cart-actions').show();
+
+    let totalPrice = 0;
+
+    cartItems.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        totalPrice += itemTotal;
+
+        $cartItems.append(`
+            <tr>
+                <td>${item.name}</td>
+                <td>
+                    <button class="update-quantity" data-index="${index}" data-action="decrease">-</button>
+                    ${item.quantity}
+                    <button class="update-quantity" data-index="${index}" data-action="increase">+</button>
+                </td>
+                <td>$${item.price}</td> <!-- 顯示商品單價 -->
+                <td>$${itemTotal}</td>   <!-- 顯示總金額 -->
+                <td>
+                    <button class="remove-item" data-index="${index}">刪除</button>
+                </td>
+            </tr>
+        `);
+    });
+
+    $('#total-price').text(`$${totalPrice}`);  // 更新總金額
+    localStorage.setItem("shoppingCart", JSON.stringify(cartItems)); // 儲存更新後的購物車資料
+}
+// 儲存更新後的購物車資料
+
+
+
+    // 監聽更新數量按鈕
+    $('#cart-items').on('click', '.update-quantity', function () {
+        const index = $(this).data('index');
+        const action = $(this).data('action');
+
+        if (action === 'increase') {
+            cartItems[index].quantity += 1; // 增加數量
+        } else if (action === 'decrease' && cartItems[index].quantity > 1) {
+            cartItems[index].quantity -= 1; // 減少數量
+        }
+
+        localStorage.setItem("shoppingCart", JSON.stringify(cartItems)); // 更新localStorage
+        updateCart(); // 更新購物車顯示
+    });
+
+    // 刪除商品功能
+    $('#cart-items').on('click', '.remove-item', function () {
+        const index = $(this).data('index');
+        cartItems.splice(index, 1); // 刪除指定商品
+        localStorage.setItem("shoppingCart", JSON.stringify(cartItems)); // 更新localStorage
+        updateCart(); // 更新購物車顯示
+    });
+
+    // 初始化購物車
+    updateCart();
+});
+        
+    </script>
+    <div class="contact-info-block" id="contact">
+        <h3>聯絡我們</h3>
+        <p><strong>客服專線：</strong>0800-123-456</p>
+        <p><strong>客服時間：</strong>週一至週五 9:00 AM - 6:00 PM</p>
+        <p><strong>電子郵件：</strong>contact@pawsforacause.com</p>
+    </div>
+
+    <!-- 底部版權 -->
+    <footer>
+        <p>© 2024 Paws for a Cause | All Rights Reserved</p>
+    </footer>
+</body>
+</html>
