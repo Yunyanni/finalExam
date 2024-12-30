@@ -392,6 +392,49 @@ button.quantity-btn:hover {
     align-items: center;
     gap: 10px; /* 控制數量框與按鈕之間的間距 */
 }
+/* 星星的基本樣式 */
+/* 評分容器，將星星與評分文本並排對齊 */
+.rating-container {
+    display: inline-flex;
+    align-items: center; /* 確保星星和文字垂直對齊 */
+    text-align: center;
+}
+
+/* 評分文本，調整文字與星星的間距 */
+.rating-text {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+/* 評分文本，調整文字與星星的間距 */
+.rating-text {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+/* 星星的基本樣式 */
+.stars {
+    display: flex;
+    cursor: pointer;
+    align-items: center;  /* 保證星星垂直居中 */
+}
+
+/* 星星的樣式 */
+.star {
+    font-size: 30px;
+    color: #ccc; /* 預設灰色 */
+    margin-right: 5px;
+}
+
+/* 當星星被選中時顯示黃色 */
+.star.selected {
+    color: gold;
+}
+
+/* 當星星被懸停時顯示黃色 */
+.star.hover {
+    color: gold;
+}
 
 
     </style>
@@ -481,7 +524,32 @@ button.quantity-btn:hover {
             </div>
         </div>
     </main>
-    
+    <script>
+        // 確保頁面加載後執行
+        window.onload = function () {
+            // 將數量輸入框重置為 1
+            document.getElementById('quantity').value = 1;
+
+            // 增加和減少按鈕功能
+            const decreaseBtn = document.getElementById('decreaseBtn');
+            const increaseBtn = document.getElementById('increaseBtn');
+            const quantityInput = document.getElementById('quantity');
+
+            // 減少數量
+            decreaseBtn.addEventListener('click', function () {
+                let currentValue = parseInt(quantityInput.value);
+                if (currentValue > 1) {
+                    quantityInput.value = currentValue - 1;
+                }
+            });
+
+            // 增加數量
+            increaseBtn.addEventListener('click', function () {
+                let currentValue = parseInt(quantityInput.value);
+                quantityInput.value = currentValue + 1;
+            });
+        };
+    </script>
     <script>
         // 假設 cartItems 是從 localStorage 載入的
 let cartItems = JSON.parse(localStorage.getItem("shoppingCart")) || [];
@@ -519,9 +587,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 加入購物車按鈕功能
     addToCartButton.addEventListener("click", function() {
-        var productName = "泌尿道保健濕糧";  // 假設商品名稱
+        var productName = "牛肉罐頭";  // 假設商品名稱
         var productQuantity = parseInt(quantityInput.value);  // 取得使用者選擇的數量
-        var productPrice=350;
+        var productPrice=80;
         var productTotalPrice = productPrice * productQuantity;  // 計算總價
 
         // 構建商品資料
@@ -622,7 +690,46 @@ document.addEventListener("DOMContentLoaded", function() {
     // 初始化購物車
     updateCart();
 });
+// 當頁面加載時，為每顆星星添加事件處理程序
+document.addEventListener("DOMContentLoaded", function() {
+    const stars = document.querySelectorAll(".star");
+    
+    stars.forEach(star => {
+        // 當鼠標移入星星時，改變顏色
+        star.addEventListener("mouseenter", function() {
+            const rating = this.getAttribute("data-value");
+            stars.forEach(star => {
+                if (star.getAttribute("data-value") <= rating) {
+                    star.classList.add("hover");
+                } else {
+                    star.classList.remove("hover");
+                }
+            });
+        });
+        
+        // 當鼠標離開星星時，恢復顏色
+        star.addEventListener("mouseleave", function() {
+            stars.forEach(star => {
+                star.classList.remove("hover");
+            });
+        });
+        
+        // 當點擊星星時，設置選中狀態
+        star.addEventListener("click", function() {
+            const rating = this.getAttribute("data-value");
+            stars.forEach(star => {
+                if (star.getAttribute("data-value") <= rating) {
+                    star.classList.add("selected");
+                } else {
+                    star.classList.remove("selected");
+                }
+            });
+        });
+    });
+});
 
+
+        
         
     </script>
 </script>
@@ -631,29 +738,43 @@ document.addEventListener("DOMContentLoaded", function() {
         <h2>商品評論</h2>
         <div class="review">
             <p class="reviewer">小明: <span class="rating">★★★★★</span></p>
-            <p class="comment">我的狗超喜歡！</p>
+            <p class="comment">我的狗超喜歡。</p>
         </div>
         <div class="review">
             <p class="reviewer">小華: <span class="rating">★★★★☆</span></p>
-            <p class="comment">當事狗很喜歡～</p>
+            <p class="comment">當事狗很喜歡，但是價格稍微有點貴。</p>
         </div>
+        
         <div class="review-form">
             <h3>發表評論</h3>
+            <label for="rating">評分：</label>
+            <div class="star-container" id="rating">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+            </div>
             <textarea placeholder="留下您的評論..." rows="4" cols="50"></textarea><br>
             <button class="button submit">提交評論</button>
         </div>
     </div>
+    
+    
     <div class="contact-info-block" id="contact">
         <h3>聯絡我們</h3>
         <p><strong>客服專線：</strong>0800-123-456</p>
         <p><strong>客服時間：</strong>週一至週五 9:00 AM - 6:00 PM</p>
         <p><strong>電子郵件：</strong>contact@pawsforacause.com</p>
     </div>
-
-    <!-- 底部版權 -->
-    <footer>
-        <p>© 2024 Paws for a Cause | All Rights Reserved</p>
-    </footer>
-</body>
-</html>
-
+    
+        
+    
+        <!-- 底部版權 -->
+        <footer>
+            <p>© 2024 Paws for a Cause | All Rights Reserved</p>
+        </footer>
+    </body>
+    </html>
+    
+    

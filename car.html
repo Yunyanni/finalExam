@@ -216,12 +216,21 @@
                 <input type="email" id="email" required>
             </div>
             <div class="form-group">
+                <label for="phone">電話:</label>
+                <input type="text" id="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="address">地址:</label>
+                <input type="text" id="address" required>
+            </div>
+            <div class="form-group">
                 <label for="password">密碼:</label>
                 <input type="password" id="password" required>
             </div>
             <button type="submit">註冊</button>
         </form>
     </section>
+    
 
     <section id="login" style="display: none;">
         <h2>會員登入</h2>
@@ -268,6 +277,7 @@
     <section id="profile" style="display: none;">
         <h2>會員資料</h2>
         <div id="profile-info">尚未登入</div>
+        <div id="profile-details"></div>
         <h3>歷史消費紀錄</h3>
         <ul id="order-list">
             <li>尚無消費紀錄</li>
@@ -285,34 +295,42 @@
             let registeredUser = null;
             let cartItems = JSON.parse(localStorage.getItem("shoppingCart")) || [];
 
-            // 註冊功能
-            $('#register-form').submit(function (e) {
-                e.preventDefault();
-                registeredUser = {
-                    name: $('#name').val(),
-                    email: $('#email').val(),
-                    password: $('#password').val()
-                };
-                alert('註冊成功，請登入！');
-                $('#register').hide();
-                $('#login').show();
-            });
+        // 註冊功能
+        $('#register-form').submit(function (e) {
+        e.preventDefault();
+        registeredUser = {
+            name: $('#name').val(),
+            email: $('#email').val(),
+            phone: $('#phone').val(),
+            address: $('#address').val(),
+            password: $('#password').val()
+        };
+            alert('註冊成功，請登入！');
+            $('#register').hide();
+            $('#login').show();
+    });
 
-            // 登入功能
-            $('#login-form').submit(function (e) {
-                e.preventDefault();
-                const loginEmail = $('#login-email').val();
-                const loginPassword = $('#login-password').val();
+        // 登入功能
+        $('#login-form').submit(function (e) {
+        e.preventDefault();
+        const loginEmail = $('#login-email').val();
+        const loginPassword = $('#login-password').val();
 
-                if (registeredUser && loginEmail === registeredUser.email && loginPassword === registeredUser.password) {
-                    alert('登入成功！');
-                    $('#login').hide();
-                    $('#profile').show();
-                    $('#profile-info').text(`會員姓名: ${registeredUser.name}`);
-                } else {
-                    alert('Email 或密碼輸入錯誤！');
-                }
-            });
+        if (registeredUser && loginEmail === registeredUser.email && loginPassword === registeredUser.password) {
+        alert('登入成功！');
+        $('#login').hide();
+        $('#profile').show();
+        $('#profile-info').text(`會員姓名: ${registeredUser.name}`);
+        $('#profile-details').html(`
+            <p><strong>Email:</strong> ${registeredUser.email}</p>
+            <p><strong>電話:</strong> ${registeredUser.phone}</p>
+            <p><strong>地址:</strong> ${registeredUser.address}</p>
+        `);
+        }   else {
+            alert('Email 或密碼輸入錯誤！');
+        }
+    });
+
 
             // 導覽列點擊事件
             $('#nav-cart').click(function () {

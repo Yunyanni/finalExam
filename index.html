@@ -250,9 +250,91 @@
                 width: 100%;
             }
         }
+        /* 彈出廣告視窗背景 */
+        .popup-ad {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            visibility: hidden; /* 預設為隱藏 */
+            opacity: 0;
+            transition: visibility 0.3s, opacity 0.3s;
+        }
+
+        /* 彈出內容 */
+        .popup-content {
+            position: relative;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+        }
+
+        /* 關閉按鈕 */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #555;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+
+        /* 廣告標題 */
+        .popup-content h2 {
+            font-size: 20px;
+            color: #4e3b31;
+            margin-bottom: 10px;
+        }
+
+        /* 廣告文字 */
+        .popup-content p {
+            font-size: 16px;
+            color: #6a4f4b;
+            margin-bottom: 20px;
+        }
+
+        /* 廣告按鈕 */
+        .ad-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #6a4f4b;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .ad-link:hover {
+            background-color: #4e3b31;
+        }
+
     </style>
 </head>
 <body>
+    <div class="popup-ad" id="popupAd">
+        <div class="popup-content">
+            <span class="close-btn" id="closeBtn">&times;</span>
+            <h2>🐾 歡迎來到 Paws for a Cause！</h2>
+            <p>我們專注於為毛小孩提供最優質的飼料與用品。感謝您的支持，讓愛心傳遞到每一隻需要幫助的動物。</p>
+            <a href="about.html" class="ad-link">了解我們</a>
+        </div>
+    </div>
+    
+    
     <!-- 導覽列 -->
     <div class="navbar">
         <div class="brand">Paws for a Cause</div>
@@ -393,5 +475,54 @@
         showSlides('slideshow1');
         showSlides('slideshow2');
     </script>
+    <script>
+    window.onload = function () {
+        const popupAd = document.getElementById("popupAd");
+        const closeBtn = document.getElementById("closeBtn");
+
+        // 顯示彈窗
+        popupAd.style.visibility = "visible";
+        popupAd.style.opacity = "1";
+
+        // 點擊關閉按鈕關閉彈窗
+        closeBtn.onclick = function () {
+            popupAd.style.visibility = "hidden";
+            popupAd.style.opacity = "0";
+        };
+
+        // 點擊背景也可以關閉彈窗
+        popupAd.onclick = function (event) {
+            if (event.target === popupAd) {
+                popupAd.style.visibility = "hidden";
+                popupAd.style.opacity = "0";
+            }
+        };
+    };
+</script>
+<script>
+    window.onload = function () {
+        const popupAd = document.getElementById("popupAd");
+        const closeBtn = document.getElementById("closeBtn");
+
+        // 顯示彈窗
+        popupAd.style.visibility = "visible";
+        popupAd.style.opacity = "1";
+
+        // 點擊關閉按鈕關閉彈窗
+        closeBtn.onclick = function () {
+            popupAd.style.visibility = "hidden";
+            popupAd.style.opacity = "0";
+        };
+
+        // 點擊背景也可以關閉彈窗
+        popupAd.onclick = function (event) {
+            if (event.target === popupAd) {
+                popupAd.style.visibility = "hidden";
+                popupAd.style.opacity = "0";
+            }
+        };
+    };
+</script>
+
 </body>
 </html>
